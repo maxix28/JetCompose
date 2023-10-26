@@ -22,7 +22,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,9 +40,55 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val fontFamily = FontFamily(
+            Font(R.font.lexend_black9, FontWeight.Thin),
+            Font(R.font.lexend_black8, FontWeight.Light),
+            Font(R.font.lexend_black7, FontWeight.Normal),
+            Font(R.font.lexend_black6, FontWeight.Medium),
+            Font(R.font.lexend_black5, FontWeight.SemiBold),
+            Font(R.font.lexend_black2, FontWeight.Bold),
+            Font(R.font.lexend_black, FontWeight.ExtraBold),
+        )
         setContent {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF101010))){
+                Text(
+                    text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(
+                        color = Color.Green,
+                        fontSize = 50.sp
+                    )) {
+                        append("J")
+                    }
+                        append("etpack")
 
-          ImageCard(painter = painterResource(id = R.drawable.catt), contentDescription = "lalalala", title ="lululululullu")
+                        withStyle(style = SpanStyle(
+                            color = Color.Green,
+                            fontSize = 50.sp
+                        )) {
+                            append(" C")
+                        }
+                        append("ompose")
+
+                    },
+
+
+
+                //" Jetpack Compose",
+                    color = Color.Red,
+                    fontSize = 30.sp,
+                    fontFamily = fontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    //textDecoration = TextDecoration.Underline
+
+                )
+
+            }
+
+
+
         }
     }
 }
@@ -77,15 +131,18 @@ fun ImageCard(
             )
 
 
-            Box (modifier =  Modifier.fillMaxSize().background(Brush.verticalGradient(
-                colors = listOf(
-                    Color.Transparent,
-                    Color.Black
-                ),
-                startY = 300f
+            Box (modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black
+                        ),
+                        startY = 300f
 
-            )
-            )
+                    )
+                )
             ){
 
             }
