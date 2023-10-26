@@ -1,5 +1,6 @@
 package com.example.compose1
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,6 +8,7 @@ import androidx.compose.foundation.Image
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -14,6 +16,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose1.ui.theme.Compose1Theme
+import kotlin.random.*
 
 class MainActivity : ComponentActivity() {
 
@@ -50,44 +55,28 @@ class MainActivity : ComponentActivity() {
             Font(R.font.lexend_black, FontWeight.ExtraBold),
         )
         setContent {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFF101010))){
-                Text(
-                    text = buildAnnotatedString {
-                    withStyle(style = SpanStyle(
-                        color = Color.Green,
-                        fontSize = 50.sp
-                    )) {
-                        append("J")
-                    }
-                        append("etpack")
-
-                        withStyle(style = SpanStyle(
-                            color = Color.Green,
-                            fontSize = 50.sp
-                        )) {
-                            append(" C")
-                        }
-                        append("ompose")
-
-                    },
 
 
-
-                //" Jetpack Compose",
-                    color = Color.Red,
-                    fontSize = 30.sp,
-                    fontFamily = fontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic,
-                    //textDecoration = TextDecoration.Underline
-
-                )
-
-            }
+             Column(Modifier.fillMaxSize()){
+                 val color = remember{
+                     mutableStateOf(Color.Yellow)
+                 }
 
 
+                 ColorBox(Modifier.weight(1f).fillMaxSize(), ){
+                     color.value = it
+                 }
+                 Box(Modifier.fillMaxSize().background(color = color.value).weight(1f)){
+
+                 }
+                 ColorBox(Modifier.weight(1f).fillMaxSize(),  ){
+                     color.value = it
+                 }
+                 Box(Modifier.fillMaxSize().background(color = color.value).weight(1f)){
+
+                 }
+
+             }
 
         }
     }
@@ -157,3 +146,36 @@ fun ImageCard(
 }
 
 
+
+@Composable
+fun ColorBox(modifier: Modifier= Modifier,
+updateColor :(Color)->Unit){
+    val color =  remember {
+        mutableStateOf(Color.Yellow)
+    }
+
+    Box(modifier = modifier
+        .background(color = color.value)
+
+
+        .clickable {
+            updateColor(
+                Color(
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    1f
+                )
+
+
+            )
+            color.value = Color(
+                Random.nextFloat(),
+                Random.nextFloat(),
+                Random.nextFloat(),
+                1f
+            )
+        }
+    )
+
+}
