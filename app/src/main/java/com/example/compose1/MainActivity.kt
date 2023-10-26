@@ -11,13 +11,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -39,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose1.ui.theme.Compose1Theme
+import kotlinx.coroutines.launch
 import kotlin.random.*
 
 class MainActivity : ComponentActivity() {
@@ -55,28 +53,48 @@ class MainActivity : ComponentActivity() {
             Font(R.font.lexend_black, FontWeight.ExtraBold),
         )
         setContent {
+            val scaffoldState = rememberScaffoldState()
+            var textFieldState by remember {
+                mutableStateOf("")
+            }
+            val scope = rememberCoroutineScope()
+
+              Scaffold(modifier = Modifier.fillMaxSize(),
+              scaffoldState = scaffoldState)
+              {
+                  it
+                  Column(horizontalAlignment = Alignment.CenterHorizontally,
+                  verticalArrangement = Arrangement.Center,
+                  modifier = Modifier
+                      .fillMaxSize()
+                      .padding(horizontal = 30.dp))
+                  {
+                      TextField(value = textFieldState, label =
+                      {
+                          Text("Enter your name")
+                      } ,
+                          onValueChange =
+                          {
+                              textFieldState = it
+                          }, singleLine = true,
+                          modifier = Modifier.fillMaxWidth()
+                      )
+                      Spacer(modifier = Modifier.padding(16.dp))
+                      Button(onClick = {
+                          scope.launch {
+                              scaffoldState.snackbarHostState.showSnackbar("Hello $textFieldState")
+                              textFieldState =""
+                          }
+                       }) {
+                          Text(" Pls greet me")
 
 
-             Column(Modifier.fillMaxSize()){
-                 val color = remember{
-                     mutableStateOf(Color.Yellow)
-                 }
+                      }
 
 
-                 ColorBox(Modifier.weight(1f).fillMaxSize(), ){
-                     color.value = it
-                 }
-                 Box(Modifier.fillMaxSize().background(color = color.value).weight(1f)){
 
-                 }
-                 ColorBox(Modifier.weight(1f).fillMaxSize(),  ){
-                     color.value = it
-                 }
-                 Box(Modifier.fillMaxSize().background(color = color.value).weight(1f)){
-
-                 }
-
-             }
+                  }
+              }
 
         }
     }
