@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.SpanStyle
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,52 +55,132 @@ class MainActivity : ComponentActivity() {
             Font(R.font.lexend_black, FontWeight.ExtraBold),
         )
         setContent {
-            val scaffoldState = rememberScaffoldState()
-            var textFieldState by remember {
-                mutableStateOf("")
-            }
-            val scope = rememberCoroutineScope()
 
-              Scaffold(modifier = Modifier.fillMaxSize(),
-              scaffoldState = scaffoldState)
-              {
-                  it
-                  Column(horizontalAlignment = Alignment.CenterHorizontally,
-                  verticalArrangement = Arrangement.Center,
-                  modifier = Modifier
-                      .fillMaxSize()
-                      .padding(horizontal = 30.dp))
-                  {
-                      TextField(value = textFieldState, label =
-                      {
-                          Text("Enter your name")
-                      } ,
-                          onValueChange =
-                          {
-                              textFieldState = it
-                          }, singleLine = true,
-                          modifier = Modifier.fillMaxWidth()
-                      )
-                      Spacer(modifier = Modifier.padding(16.dp))
-                      Button(onClick = {
-                          scope.launch {
-                              scaffoldState.snackbarHostState.showSnackbar("Hello $textFieldState")
-                              textFieldState =""
-                          }
-                       }) {
-                          Text(" Pls greet me")
+            Column (modifier = Modifier.padding(horizontal = 5.dp) ){
+                LazyRow(
+                    // modifier =  Modifier.verticalScroll(scrollState)
+                ) {
+//                itemsIndexed(
+//                    listOf("this", "is","Jetpack", "Conmpose")
+//                ){index: Int, String: String ->
+//                    Text(
+//                        text = String,
+//                        fontSize = 24.sp,
+//                        fontWeight = FontWeight.Bold,
+////                        textAlign =Alignment.Center,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(vertical = 25.dp)
+//
+//                    )
+//                }
+                    items(5000) {
 
+                        Text(
+                            text = "Item $it ",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+//                        textAlign =Alignment.Center,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
 
-                      }
+                        )
+                    }
+                }
+                    LazyRow{
+                    items(5000) {
 
+                        Text(
+                            text = "Item $it",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
 
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
 
-                  }
-              }
+                        )
+                    }
+
+                }
+                LazyRow{
+                    items(5000) {
+
+                        Text(
+                            text = "Item $it ",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
+
+                        )
+                    }
+
+                }
+                LazyRow{
+                    items(5000) {
+
+                        Text(
+                            text = "Item $it ",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
+
+                        )
+                    }
+
+                }
+                LazyRow{
+                    items(5000) {
+
+                        Text(
+                            text = "Item $it ",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
+
+                        )
+                    }
+
+                }
+                LazyRow{
+                    items(5000) {
+
+                        Text(
+                            text = "Item $it ",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 25.dp)
+
+                        )
+                    }
+
+                }
 
         }
     }
 }
+
+
 
 @Composable
 fun Greeting(name: String) {
@@ -196,4 +278,4 @@ updateColor :(Color)->Unit){
         }
     )
 
-}
+}}
